@@ -107,9 +107,9 @@ The loss for a single pair of words $c$ and $o$ is defined as:
 
 To learn the correct center and outside vector by gradient descent, we need to compute the partial derivative of the outside and center word vectors. Partial derivative of $J_{\text{naive-softmax}}$ with respect to $v_c$ can be obtained as following:
 \begin{equation}
-\frac{\partial J}{\partial v_c}= -u_o+\frac{\sum_{i\in vocab} u_i\exp(u_i^Tv_c)}{\sum_{w\in vocab}\exp(u_w^Tv_c)}\\
-=-u_o+\sum_{i\in vocab}P(O=i|C=c)u_i\\= -u_o+\sum_{w \in vocab}\hat{y}_wu_w\\
-= -\mathbf{y}U^T+\hat{\mathbf{y}}U^T
+\frac{\partial J}{\partial v_c}= -u_o^T+\frac{\sum_{i\in vocab} u_i^T\exp(u_i^Tv_c)}{\sum_{w\in vocab}\exp(u_w^Tv_c)}\\
+=-u_o^T+\sum_{i\in vocab}P(O=i|C=c)u_i^T\\= -u_o^T+\sum_{w \in vocab}\hat{y}_wu_w^T\\
+= -\mathbf{y}^TU^T+\hat{\mathbf{y}}^TU^T
 \label{partial v_c}
 \end{equation}where $\mathbf{y}$ is the one-hot vector which has 1 at the index of true outside word $o$ ($y_o=1$ and 0 for all other $i!=o$, $y_i=0$), and 0 everywhere else while $\hat{\mathbf{y}}$ stands for $P(O|C=c)$, a prediction made by Skip-gram model in equation (\ref{word2vec_condprob}).
 \begin{enumerate}[label=(\alph*)]
@@ -207,13 +207,13 @@ Similar to the Skip-gram model, the loss function we are trying to optimize (for
     \bm J(v_c, u_o, u_{w_s}) &= - \log(\sigma(s(v_c, u_o)))  - \sum_{s=1}^K \log(\sigma(-s(v_c, u_{w_s}))) \\
     s(w, u_o) &= \sum_{g \in G_w} z_g^T u_o
 \end{align*}
-We associate a vector representation $z_g$ to each n-gram $g$. 
+We associate a vector representation $z_g$ to each character n-gram $g$. 
 Make sure you understand how this expression is written using the sigmoid ($\sigma$) is similar to the one in the paper. 
 Extending this to every outside word, we get the objective as:
 \begin{align*}
     \bm J_{\text{FastText}}(w_c, w_{t-m}, w_{t-m+1} \dots w_{t+m}) = \sum_{\substack{-m\le j \le m \\ j\ne 0}} \bm J(w_t, w_c, N_K)
 \end{align*}
-The embeddings for the context words are from the  \textit{context} embeddings $U$ while the embeddings of the n-grams from the center word are drawn from the hash embeddings for \textit{center word} $Z$. 
+The embeddings of the n-grams from the center words are from the  \textit{center} embeddings $V$ while the embeddings for the outside words are drawn from  \textit{outside word} embeddings $U$. 
 
 \begin{enumerate}[label=(\alph*)]
     \item You train a Skip-gram model and a fastText model (with parameters as described in the paper) on a corpus of text. You train these models to have embeddings of size 128. Your corpus has 40000 unique words. Your model is upper-bounded by $2e6$ subword tokens. \\
@@ -286,11 +286,10 @@ After running the code and checking out the list, state \textbf{TWO} reasons why
 %%%%%ANSWER FOR 3 b%%%%%%
 \begin{answer}
 \end{answer}
-\item When considering Cosine Similarity, it's often more convenient to think of Cosine Distance, which is simply (1 - Cosine Similarity).
-
+\item 
 Find three sentences where $s_1$ and $s_2$ have similar meanings and $s_1$ and $s_3$ have opposite meanings, while cosine distance between $(s_1, s_2)$ is longer than $(s_1, s_3)$  
-
-As an example, $s_1$=``John likes to watch movies. Mary likes movies too." is closer to $s_3$=``Mary likes to watch football games." than to $s_2$=``John likes to watch films. So does mary." in the vector space. Please find a different example that satisfies the above. Once you have found your example, please give a possible explanation for why this counter-intuitive result may have happened. \textbf{(4pts)}
+As an example, $s_1$="I like everything of this movie. The only thing I do not like is the cast." is closer to $s_3$="I do not like everything of this movie. The only thing I like is the cast." than to $s_2$="I love all about this movie." in the vector space. Please find a different example that satisfies the above. Once you have found your example, please give a possible explanation for why this counter-intuitive result may have happened.
+\textbf{(4pts)}
 
 %%%%%ANSWER FOR 3 c%%%%%%
 \begin{answer}
@@ -374,7 +373,18 @@ One solution to this problem is to use the TF-IDF representation.
              %%%%%ANSWER FOR 4.2 a%%%%%%
 
 \begin{answer}
-
+\begin{table}[H]
+\centering
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+     & I & AM & SAM & LIKE & GREEN & EGGS & AND & HAM \\ \hline
+doc1 &   &    &     &      &       &      &     &     \\ \hline
+doc2 &   &    &     &      &       &      &     &     \\ \hline
+doc3 &   &    &     &      &       &      &     &     \\ \hline
+query &   &    &     &      &       &      &     &     \\ \hline
+\end{tabular}
+\end{table}
     \end{answer}
 	\item How does TF-IDF solve the issue quoted in 4.1? \textbf{(4pts)}
             %%%%%ANSWER FOR 4.2 b%%%%%%
