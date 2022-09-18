@@ -306,12 +306,13 @@ def test_treebank():
     """ Test treebank implementations, before running """
 
     s_lists=["woodland", "queasy","infatuation","kids in peril","petri"]
-    ngram_lists=[['<w', '<wo', '<woo', 'an', 'and', 'and>', 'd>', 'dl', 'dla', 'dlan', 'la', 'lan', 'land', 'nd', 'nd>', 'od', 'odl', 'odla', 'oo', 'ood', 'oodl', 'wo', 'woo', 'wood', 'woodland'],['<q', '<qu', '<que', 'as', 'as', 'asy', 'asy>', 'ea', 'eas', 'easy', 'qu', 'que', 'quea', 'queasy', 'sy', 'sy>', 'ue', 'uea', 'ueas', 'y>'],['<i', '<in', '<inf', 'at', 'at', 'ati', 'atio', 'atu', 'atua', 'fa', 'fat', 'fatu', 'in', 'inf', 'infa', 'infatuation', 'io', 'ion', 'ion>', 'n>', 'nf', 'nfa', 'nfat', 'on', 'on>', 'ti', 'tio', 'tion', 'tu', 'tua', 'tuat', 'ua', 'uat', 'uati'],[' i', ' in', ' in ', ' p', ' pe', ' per', '<k', '<ki', '<kid', 'ds', 'ds ', 'ds i', 'er', 'eri', 'eril', 'id', 'ids', 'ids ', 'il', 'il>', 'in', 'in ', 'in p', 'ki', 'kid', 'kids', 'kids in peril', 'l>', 'n ', 'n p', 'n pe', 'pe', 'per', 'peri', 'ri', 'ril', 'ril>', 's ', 's i', 's in'],['<p', '<pe', '<pet', 'et', 'etr', 'etri', 'i>', 'pe', 'pet', 'petr','petri', 'ri', 'ri>', 'tr', 'tri', 'tri>']]
+    ngram_lists=[['<w', '<wo', '<woo', 'an', 'and', 'and>', 'd>', 'dl', 'dla', 'dlan', 'la', 'lan', 'land', 'nd', 'nd>', 'od', 'odl', 'odla', 'oo', 'ood', 'oodl', 'wo', 'woo', 'wood', 'woodland'],['<q', '<qu', '<que', 'as', 'asy', 'asy>', 'ea', 'eas', 'easy', 'qu', 'que', 'quea', 'queasy', 'sy', 'sy>', 'ue', 'uea', 'ueas', 'y>'],['<i', '<in', '<inf', 'at', 'at', 'ati', 'atio', 'atu', 'atua', 'fa', 'fat', 'fatu', 'in', 'inf', 'infa', 'infatuation', 'io', 'ion', 'ion>', 'n>', 'nf', 'nfa', 'nfat', 'on', 'on>', 'ti', 'tio', 'tion', 'tu', 'tua', 'tuat', 'ua', 'uat', 'uati'],[' i', ' in', ' in ', ' p', ' pe', ' per', '<k', '<ki', '<kid', 'ds', 'ds ', 'ds i', 'er', 'eri', 'eril', 'id', 'ids', 'ids ', 'il', 'il>', 'in', 'in ', 'in p', 'ki', 'kid', 'kids', 'kids in peril', 'l>', 'n ', 'n p', 'n pe', 'pe', 'per', 'peri', 'ri', 'ril', 'ril>', 's ', 's i', 's in'],['<p', '<pe', '<pet', 'et', 'etr', 'etri', 'i>', 'pe', 'pet', 'petr','petri', 'ri', 'ri>', 'tr', 'tri', 'tri>']]
     print("==== Answer check for generate_ngrams ====")
     print("\n=== Results ===")
     for i in range(len(s_lists)):
         if generate_ngrams(s_lists[i],2,4) != ngram_lists[i]: 
-            assert "Wrong Answer! character n-grams of {} should be {}".format(s_lists[i],ngram_lists[i])
+            print("Wrong Answer! character n-grams of {} should be {}".format(s_lists[i],ngram_lists[i]))
+            return
     print("Sanity check passed")
 
 
